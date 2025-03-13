@@ -24,7 +24,7 @@ def generate_synthetic_data(commodity, weeks=52):
 # Generate synthetic data for different commodities
 diesel_data = generate_synthetic_data('Diesel')
 petroleum_data = generate_synthetic_data('Petroleum')
-lng_data = generate_synthetic_data('LNG')
+lng_data = generate_synthetic_data('Lng')
 
 # Merge all commodities into one DataFrame
 commodities_data = diesel_data.merge(petroleum_data, on='Week').merge(lng_data, on='Week')
@@ -34,7 +34,7 @@ commodities_data['Week'] = pd.to_datetime(commodities_data['Week'])
 commodities_data.set_index('Week', inplace=True)
 
 # Debugging: Print the columns of the commodities_data DataFrame
-print("Commodities Data Columns:", commodities_data.columns)
+print("Commodities Data Columns:", list(commodities_data.columns))
 
 # Function to predict prices using ARIMA
 def predict_prices(data, commodity, steps=10):
@@ -93,8 +93,7 @@ def handle_message(user_message):
     response = ""
 
     # Identify the commodity
-    commodity = next((word.capitalize() for word in filtered_tokens if word.capitalize() in commodities_data.columns), None)
-    commodity = next((word.upper() for word in filtered_tokens if word.upper() in commodities_data.columns), None)
+    commodity = next((word.capitalize() for word in filtered_tokens if word.capitalize() in commodities_data.columns or word.upper() in commodities_data.columns), None)
     # Debugging: Print the identified commodity
     print("Identified Commodity:", commodity)
 

@@ -1,0 +1,14 @@
+                import pandas as pd
+
+                # Load the data
+                file_path = '/Users/seanleahy/intro to ai/Energy-Chatbot/commodities_data.csv'
+                data = pd.read_csv(file_path, skiprows=1)
+
+                # Replace '…' and 'N/A' with NaN
+                data.replace(['…', 'N/A'], pd.NA, inplace=True)
+
+                # Save the cleaned data to a new CSV file
+                cleaned_file_path = '/Users/seanleahy/intro to ai/Energy-Chatbot/cleaned_commodities_data.csv'
+                data.to_csv(cleaned_file_path, index=False)
+
+                print("Data cleaned and saved to", cleaned_file_path)
